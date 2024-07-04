@@ -22,6 +22,7 @@ if (users.length === 0) {
         { username: 'user', password: 'password', isAdmin: false, balance: 0, isBanned: false },
         { username: '0629482089267', password: 'Thomas280808', isAdmin: false, balance: 0, isBanned: false },
         { username: '0957261843029', password: 'Chihiro03109', isAdmin: false, balance: 0, isBanned: false },
+        { username: '8361724905124', password: 'Marc897809', isAdmin: false, balance: 0, isBanned: false },
         { username: '0735821943051', password: 'Lucas030739', isAdmin: false, balance: 0, isBanned: false },
         { username: 'Thomas', password: 'Thomas', isAdmin: false, balance: 0, isBanned: false },
         { username: 'test_ban', password: 'password', isAdmin: false, balance: 0, isBanned: true },
