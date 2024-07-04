@@ -1,6 +1,20 @@
+// Force re-initialization of users for testing purposes
+localStorage.removeItem('users');
+localStorage.removeItem('currentUser');
+
+// Clear localStorage to remove any unwanted users
+localStorage.clear();
+
 // Initialize users and transaction logs
 let users = JSON.parse(localStorage.getItem('users')) || [];
 let transactionLogs = JSON.parse(localStorage.getItem('transactionLogs')) || [];
+
+// Log the current state of localStorage before initializing
+console.log('Current users in localStorage:', JSON.parse(localStorage.getItem('users')));
+console.log('Current transactionLogs in localStorage:', JSON.parse(localStorage.getItem('transactionLogs')));
+
+// Log the state of the users array after fetching from localStorage
+console.log('Users array after fetching from localStorage:', users);
 
 // Check if users array is empty and initialize it if necessary
 if (users.length === 0) {
@@ -14,11 +28,10 @@ if (users.length === 0) {
         { username: 'Admin', password: 'Pepeci67310', isAdmin: true, balance: 1000, isBanned: false }
     );
     localStorage.setItem('users', JSON.stringify(users));
+    console.log('Users array after initialization:', users);
 }
 
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
-
-// Update currentUser with the found user in the users array
 if (currentUser) {
     const foundUser = users.find(u => u.username === currentUser.username);
     if (foundUser) {
@@ -29,6 +42,7 @@ if (currentUser) {
         localStorage.removeItem('currentUser');
     }
 }
+
 
 // Function to log transaction
 function logTransaction(sender, receiver, amount, type) {
