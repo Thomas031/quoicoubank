@@ -2,6 +2,7 @@
 let users = JSON.parse(localStorage.getItem('users')) || [];
 let transactionLogs = JSON.parse(localStorage.getItem('transactionLogs')) || [];
 
+// Check if users array is empty and initialize it if necessary
 if (users.length === 0) {
     users.push(
         { username: 'user', password: 'password', isAdmin: false, balance: 0, isBanned: false },
@@ -16,13 +17,20 @@ if (users.length === 0) {
 }
 
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+
+// Update currentUser with the found user in the users array
 if (currentUser) {
     const foundUser = users.find(u => u.username === currentUser.username);
     if (foundUser) {
         currentUser = foundUser;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    } else {
+        currentUser = null;
+        localStorage.removeItem('currentUser');
     }
 }
 
+// Function to log transaction
 function logTransaction(sender, receiver, amount, type) {
     const logEntry = {
         sender: sender,
@@ -40,6 +48,7 @@ function logTransaction(sender, receiver, amount, type) {
     }
 }
 
+// Function to add log to section
 function addLogToSection(logText) {
     const logsSection = document.getElementById('transaction-logs');
     const logItem = document.createElement('li');
@@ -47,6 +56,7 @@ function addLogToSection(logText) {
     logsSection.insertBefore(logItem, logsSection.firstChild);
 }
 
+// Function to handle user login
 function login() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
@@ -76,6 +86,7 @@ function login() {
     }
 }
 
+// Function to handle user logout
 function logout() {
     currentUser = null;
     localStorage.removeItem('currentUser');
@@ -86,16 +97,19 @@ function logout() {
     document.getElementById('logs-section').style.display = 'none';
 }
 
+// Function to update the balance display
 function updateBalance() {
-    const balanceElement = document.getElementById('balance');
-    const balanceAmount = currentUser.balance;
-    const formattedBalance = balanceAmount >= 0 ? `+${balanceAmount}` : `${balanceAmount}`;
-    balanceElement.classList.toggle('negative', balanceAmount < 0);
-    balanceElement.innerText = `${formattedBalance} €`;
-    balanceElement.classList.add('fade-in');
-    setTimeout(() => {
-        balanceElement.classList.remove('fade-in');
-    }, 1000);
+    if (currentUser) {
+        const balanceElement = document.getElementById('balance');
+        const balanceAmount = currentUser.balance;
+        const formattedBalance = balanceAmount >= 0 ? `+${balanceAmount}` : `${balanceAmount}`;
+        balanceElement.classList.toggle('negative', balanceAmount < 0);
+        balanceElement.innerText = `${formattedBalance} €`;
+        balanceElement.classList.add('fade-in');
+        setTimeout(() => {
+            balanceElement.classList.remove('fade-in');
+        }, 1000);
+    }
 }
 
 function addFunds() {
